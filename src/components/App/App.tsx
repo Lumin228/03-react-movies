@@ -16,7 +16,7 @@ function App() {
   const [topic, setTopic] = useState<string>('');
   const [searchList, setSearchList] = useState<Movie[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalInfo, setModalInfo] = useState<Movie>()
+  const [modalInfo, setModalInfo] = useState<Movie | null>(null);
 
   useEffect(() => {
     if (!topic) return;
@@ -72,8 +72,8 @@ function App() {
       ) : (
         <MovieGrid movies={searchList} onSelect={openModal} />
       )}
-      {isModalOpen && (
-        <MovieModal onClose={cloesModal} movie={modalInfo}/>
+      {isModalOpen && modalInfo && (
+        <MovieModal onClose={cloesModal} movie={modalInfo} />
       )}
     </div>
   )

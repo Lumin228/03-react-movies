@@ -3,7 +3,7 @@ import Movie from '../../types/movie'
 
 interface MovieGridInter {
     movies: Movie[],
-    onSelect: () => void;
+    onSelect: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 function MovieGrid({ movies, onSelect }: MovieGridInter) {
@@ -14,14 +14,14 @@ function MovieGrid({ movies, onSelect }: MovieGridInter) {
                 {movies.map(movie => {
                     return (
                         <li key={movie.id} >
-                            <div className={css.card} id={movie.id} onClick={onSelect}>
+                            <div className={css.card} id={movie.id.toString()} onClick={onSelect}>
                                 <img
                                     className={css.image}
                                     src={`https://image.tmdb.org/t/p/w500/${movie.poster_path || movie.backdrop_path}`}
-                                    alt={movie.original_title}
+                                    alt={movie.title}
                                     loading="lazy"
                                 />
-                                <h2 className={css.title}>{movie.original_title}</h2>
+                                <h2 className={css.title}>{movie.title}</h2>
                             </div>
                         </li>)
                 })}

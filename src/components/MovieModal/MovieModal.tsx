@@ -40,12 +40,12 @@ function MovieModal({ onClose, movie }: MovieModalInt) {
                 </button>
                 <img
                     src={`https://image.tmdb.org/t/p/w500/${movie.poster_path || movie.backdrop_path}`}
-                    alt={movie.original_title}
+                    alt={movie.title}
                     loading="lazy"
                     className={css.image}
                 />
                 <div className={css.content}>
-                    <h2>{movie.original_title}</h2>
+                    <h2>{movie.title}</h2>
                     <p>{movie.overview}</p>
                     <p>
                         <strong>Release Date:</strong> {movie.release_date}
