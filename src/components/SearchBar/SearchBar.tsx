@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import styles from './SearchBar.module.css'
 interface OrderFormProps {
   onSubmit: (value: string) => void;
@@ -9,7 +10,7 @@ function SearchBar({ onSubmit }: OrderFormProps) {
         const search = formData.get('query') as string;
         onSubmit(search)
     };
-
+    const id = useId();
     return (
         <header className={styles.header}>
             <div className={styles.container}>
@@ -21,7 +22,7 @@ function SearchBar({ onSubmit }: OrderFormProps) {
                 >
                     Powered by TMDB
                 </a>
-                <form className={styles.form} action={handleSubmit}>
+                <form className={styles.form} action={handleSubmit} id={id}>
                     <input
                         className={styles.input}
                         type="text"
@@ -29,8 +30,9 @@ function SearchBar({ onSubmit }: OrderFormProps) {
                         autoComplete="off"
                         placeholder="Search movies..."
                         autoFocus
+                        id={id}
                     />
-                    <button className={styles.button} type="submit" >
+                    <button className={styles.button} type="submit" id={id}>
                         Search
                     </button>
                 </form>

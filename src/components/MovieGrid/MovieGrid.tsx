@@ -1,19 +1,20 @@
 import css from './MovieGrid.module.css'
-import type Movie from '../../types/movie'
+import Movie from '../../types/movie'
 
 interface MovieGridInter {
-    movies: Movie[]
+    movies: Movie[],
+    onSelect: () => void;
 }
 
-function MovieGrid({ movies }: MovieGridInter) {
-
+function MovieGrid({ movies, onSelect }: MovieGridInter) {
+    
     return (
         <>
             <ul className={css.grid}>
                 {movies.map(movie => {
                     return (
-                        <li key={movie.id}>
-                            <div className={css.card}>
+                        <li key={movie.id} >
+                            <div className={css.card} id={movie.id} onClick={onSelect}>
                                 <img
                                     className={css.image}
                                     src={`https://image.tmdb.org/t/p/w500/${movie.poster_path || movie.backdrop_path}`}

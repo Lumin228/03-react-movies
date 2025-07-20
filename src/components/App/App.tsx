@@ -15,10 +15,11 @@ function App() {
   const token = import.meta.env.VITE_DOSTRUP;
   const [topic, setTopic] = useState<string>('');
   const [searchList, setSearchList] = useState<Movie[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState<Movie>()
 
   useEffect(() => {
     if (!topic) return;
-
     const fetchMovies = async () => {
       setIsLoading(true);
       setError(false);
@@ -36,8 +37,8 @@ function App() {
             },
           }
         );
-        setSearchList(response.data.results); 
-        
+        setSearchList(response.data.results);
+
       } catch (err) {
         setError(true);
         console.error(err);
@@ -45,13 +46,20 @@ function App() {
         setIsLoading(false);
       }
     };
-    
-    
     fetchMovies();
-    console.log(searchList);
-
   }, [topic, token]);
 
+  const openModal = (event: React.MouseEvent<HTMLDivElement>) => {
+    const clickedId = Number(event.currentTarget.id);
+    const movie = searchList.find(el => el.id === clickedId);
+
+    if (movie) {
+      setModalInfo(movie);
+      setIsModalOpen(true);
+    }
+  }
+
+  const cloesModal = () => { setIsModalOpen(false) }
 
 
   return (
@@ -62,8 +70,11 @@ function App() {
       ) : error !== false ? (
         <ErrorMessage />
       ) : (
-        <MovieGrid movies={searchList} />
-      )}      
+        <MovieGrid movies={searchList} onSelect={openModal} />
+      )}
+      {isModalOpen && (
+        <MovieModal onClose={cloesModal} movie={modalInfo}/>
+      )}
     </div>
   )
 }
